@@ -4,12 +4,16 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+Hello, my name is Cody. I don't think there is much to say about me aside from me being an IT oriented fella that likes to see how things move and interact.
+
+I typically fall into random solutions to problems as I move along and never really know how I get there.
+
+Perhaps something I type in this blog will give someone a solution, and if that is you than I am glad I could help.
 
 ### More Information
 
-A place to include any other types of information that you'd like to include about yourself.
+I am just a dork/nerd/geek who likes to tinker with things. Thats really all there is to me.
 
 ### Contact me
 
-[email@domain.com](mailto:email@domain.com)
+[Br0kenTh0rax@outlook.com](mailto:Br0kenTh0rax@outlook.com)
