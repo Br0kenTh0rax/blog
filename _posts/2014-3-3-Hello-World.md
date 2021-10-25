@@ -9,54 +9,54 @@ So I would like to start by saying this was not an easy task as there are not ma
 There are a few key pieces needed to get a bootable device to work with Secure Boot, essentially one of the key components that I found was that the code that is being used to run while using a Secure environment has to be signed by the Microsoft digital key. There happens to be some versions of Grub that are signed by said key and can be used to boot while leaving Secure Boot enabled. In my research I found that there is a version that VladikSS compiled using a version of Grub from a RedHat distro (https://github.com/ValdikSS/Super-UEFIinSecureBoot-Disk). The second part is having to get Kali to boot from this version of Grub, since Kali wants to install grub on it's own it requires a bit of bullying to get it to work.
 
 Step 1: We begin by collecting the tools and materials needed:
--Flash drive with over 32GB (bigger is better) _**Note I am using a 16GB for tutorial**_
--Second flash drive or bootable device to burn kali installer image on. _**Note I am using a 8GB for tutorial**_
--Super-UEFIinSecureBoot-Disk Minimal(https://github.com/ValdikSS/Super-UEFIinSecureBoot-Disk/releases)
--Kali Installer ISO (https://www.kali.org/get-kali/#kali-bare-metal)
--Etcher (https://www.balena.io/etcher/)
--Rufus (https://rufus.ie/en/)
+- Flash drive with over 32GB (bigger is better) _**Note I am using a 16GB for tutorial**_
+- Second flash drive or bootable device to burn kali installer image on. _**Note I am using a 8GB for tutorial**_
+- Super-UEFIinSecureBoot-Disk Minimal(https://github.com/ValdikSS/Super-UEFIinSecureBoot-Disk/releases)
+- Kali Installer ISO (https://www.kali.org/get-kali/#kali-bare-metal)
+- Etcher (https://www.balena.io/etcher/)
+- Rufus (https://rufus.ie/en/)
 
 Step 2: Extract the files from Super-UEFIinSecureBoot-Disk zip, this will give .img file that will be used in the next step.
 
 Step 3: Install etcher, and then run it to burn the img file to the flash device.
--On the left choose Select from file, and select the "Super-UEFIinSecureBoot-Disk_minimal.img" in the folder you extracted to. 
--Confirm the device in the middle is the device you want to burn the img file to.
--Then click the blue "Flash" button on the right hand side.
+- On the left choose Select from file, and select the "Super-UEFIinSecureBoot-Disk_minimal.img" in the folder you extracted to. 
+- Confirm the device in the middle is the device you want to burn the img file to.
+- Then click the blue "Flash" button on the right hand side.
 ![Etcher-Image-Burn]({{site.baseurl}}/_posts/Etcher.png)
 
 Step 4: Use Rufus to burn kali bootable install on second drive.
--Open Rufus, and on the right find the select box and use that to select the Kali installer iso.
--Confirm that the device is the second drive.
--Change the partition scheme to GPT, and confirm that the target system says UEFI (non CSM).
--Leave the format options to default and click the Start button on the bottom.
+- Open Rufus, and on the right find the select box and use that to select the Kali installer iso.
+- Confirm that the device is the second drive.
+- Change the partition scheme to GPT, and confirm that the target system says UEFI (non CSM).
+- Leave the format options to default and click the Start button on the bottom.
 ![Rufus-Format-Options]({{site.baseurl}}/_posts/Rufus.png)
--Rufus will ask what mode you want to use, use DD image mode.
+- Rufus will ask what mode you want to use, use DD image mode.
 
 Step 5: Insert both devices into the computer.
 
 Step 6: Temporarily disable secure boot on computer, this is necessary to boot the Kali installer flash drive.
--Depending on motherboard you have to get into BIOS/UEFI, typically this can be F10, F2, F12, F1, or DEL keys.
--Reboot computer (or power it on) and press the key from above that gets to the motherboards BIOS/UEFI.
--Once in BIOS/UEFI find the Secure Boot option and disable it.
+- Depending on motherboard you have to get into BIOS/UEFI, typically this can be F10, F2, F12, F1, or DEL keys.
+- Reboot computer (or power it on) and press the key from above that gets to the motherboards BIOS/UEFI.
+- Once in BIOS/UEFI find the Secure Boot option and disable it.
 ![Secure-Boot-Option]({{site.baseurl}}/_posts/Secure Boot.jpg)
--Make sure to apply/save changes before closing BIOS/UEFI.
+- Make sure to apply/save changes before closing BIOS/UEFI.
 
 Step 7: Access the boot menu for the motherboard, this can typically be F11 or F12, though varies per manufacture.
 ![Boot-Menu-Options]({{site.baseurl}}/_posts/Boot Menu.jpg)
 *Note here: Can be a bit hard to distinquish which drive is the Kali installer, if needed you can plug in Kali and boot to it first and then plug in the device with the modified Grub boot.
 
 Step 8: Progress through the Kali installer until you reach the partition section, at this section we have to change a few settings quickly.
--On partition disks we choose Manual.
+- On partition disks we choose Manual.
 ![Partition1.jpg]({{site.baseurl}}/_posts/Partition1.jpg)
--Then we scroll down until we find out disk with the modified Grub installed, this will have a FAT32 primary with 524 MB and a second free space partition. Select the FREE SPACE partition.
+- Then we scroll down until we find out disk with the modified Grub installed, this will have a FAT32 primary with 524 MB and a second free space partition. Select the FREE SPACE partition.
 ![Partition2.jpg]({{site.baseurl}}/_posts/Partition2.jpg)
--Choose "Automatically partition the free space"
+- Choose "Automatically partition the free space"
 ![Partition3.jpg]({{site.baseurl}}/_posts/Partition3.jpg)
--Choose "All files in one partion"
+- Choose "All files in one partion"
 ![Partition4.jpg]({{site.baseurl}}/_posts/Partition4.jpg)
--Finish partion, it will say No EFI partition (We will address this after booting into Kali). For now select "No" and continue.
+- Finish partion, it will say No EFI partition (We will address this after booting into Kali). For now select "No" and continue.
 ![Partition6.jpg]({{site.baseurl}}/_posts/Partition6.jpg)
--On the final partition page, Write changes to disks, click yes and continue.
+- On the final partition page, Write changes to disks, click yes and continue.
 ![Partition7.jpg]({{site.baseurl}}/_posts/Partition7.jpg)
 
 Step 9:
