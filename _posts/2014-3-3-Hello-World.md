@@ -42,7 +42,7 @@ Step 6: Temporarily disable secure boot on computer, this is necessary to boot t
 - Make sure to apply/save changes before closing BIOS/UEFI.
 
 Step 7: Access the boot menu for the motherboard, this can typically be F11 or F12, though varies per manufacture.
-![Boot-Menu-Options]({{site.baseurl}}/_posts/Boot Menu.jpg)
+![Boot-Menu-Options](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/Boot%20Menu.jpg)
 *Note here: Can be a bit hard to distinquish which drive is the Kali installer, if needed you can plug in Kali and boot to it first and then plug in the device with the modified Grub boot.
 
 Step 8: Progress through the Kali installer until you reach the partition section, at this section we have to change a few settings quickly.
