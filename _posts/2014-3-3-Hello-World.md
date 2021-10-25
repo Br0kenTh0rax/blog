@@ -11,10 +11,10 @@ There are a few key pieces needed to get a bootable device to work with Secure B
 Step 1: We begin by collecting the tools and materials needed:
 - Flash drive with over 32GB (bigger is better) _**Note I am using a 16GB for tutorial**_
 - Second flash drive or bootable device to burn kali installer image on. _**Note I am using a 8GB for tutorial**_
-- Super-UEFIinSecureBoot-Disk Minimal(https://github.com/ValdikSS/Super-UEFIinSecureBoot-Disk/releases)
-- Kali Installer ISO (https://www.kali.org/get-kali/#kali-bare-metal)
-- Etcher (https://www.balena.io/etcher/)
-- Rufus (https://rufus.ie/en/)
+- Super-UEFIinSecureBoot-Disk Minimal([https://github.com/ValdikSS/Super-UEFIinSecureBoot-Disk/releases]())
+- Kali Installer ISO ([https://www.kali.org/get-kali/#kali-bare-metal]())
+- Etcher ([https://www.balena.io/etcher/]())
+- Rufus ([https://rufus.ie/en/]())
 
 Step 2: Extract the files from Super-UEFIinSecureBoot-Disk zip, this will give .img file that will be used in the next step.
 
