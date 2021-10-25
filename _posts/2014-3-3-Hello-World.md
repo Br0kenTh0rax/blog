@@ -86,11 +86,11 @@ Step 13: Temporary changes to Grub bootloader to access Kali install for final s
 - Next type 'ls (hd0,5)/boot/', again replacing the 'hd0,5' part with the values you got from the above commands and keeping the parenthesis on both ends. Write or take picture of both the vmlinuz and initrd file names.
 - Hit 'esc' key on keyboard and we can now edit grub to boot into kali.
 - On the grub edit page type the following items and put two spaces before each line. Replace the UUID with your Kali partition UUID and the versions of vmlinuz/initrd with the versions you got from above:
--- insmod part_msdos
--- insmod ext2
--- search --no-floppy --fs-uuid --set=root **UUID of your Kali partition**
--- linux /boot/vmlinuz-5.10.0-kali9-amd64 root=UUID=**UUID of your Kali partition** ro  quiet splash
--- initrd /boot/initrd.img-5.10.0-kali9-amd64
+	- insmod part_msdos
+	- insmod ext2
+	- search --no-floppy --fs-uuid --set=root **UUID of your Kali partition**
+	- linux /boot/vmlinuz-5.10.0-kali9-amd64 root=UUID=**UUID of your Kali partition** ro  quiet splash
+	- initrd /boot/initrd.img-5.10.0-kali9-amd64
 - press 'ctrl' + 'x' and your system should start booting into kali where we can make the final changes.
 
 Step 14: Mounting grub partion and adding to fstab.
