@@ -6,7 +6,8 @@ published: true
 
 So I would like to start by saying this was not an easy task as there are not many resources available for this task. When I first started to research this task to be able to boot Kali off a drive while leaving Secure Boot enabled I quickly found that the resources are scarce and not many people have been successful. Most questions/comments lead to people giving up and turning of Secure Boot, however I was determined and on a long night of research I was able to find some pieces that when put together can allow you to install a Secure Bootable Kali. So without further ado lets look at the process.
 
-There are a few key pieces needed to get a bootable device to work with Secure Boot, essentially one of the key components that I found was that the code that is being used to run while using a Secure environment has to be signed by the Microsoft digital key. There happens to be some versions of Grub that are signed by said key and can be used to boot while leaving Secure Boot enabled. In my research I found that there is a version that VladikSS compiled using a version of Grub from a RedHat distro ([https://github.com/ValdikSS/Super-UEFIinSecureBoot-Disk](https://github.com/ValdikSS/Super-UEFIinSecureBoot-Disk)). The second part is having to get Kali to boot from this version of Grub, since Kali wants to install grub on it's own it requires a bit of bullying to get it to work.
+There are a few key pieces needed to get a bootable device to work with Secure Boot, essentially one of the key components that I found was that the code that is being used to run while using a Secure environment has to be signed by the Microsoft digital key. There happens to be some versions of Grub that are signed by said key and can be used to boot while leaving Secure Boot enabled. In my research I found that there is a version that VladikSS compiled using a version of Grub from a RedHat distro ([https://github.com/ValdikSS/Super-UEFIinSecureBoot-Disk](https://github.com/ValdikSS/Super-UEFIinSecureBoot-Disk)). The second part is having to get Kali to boot from this version of Grub, since Kali wants to install grub on it's own it requires a bit of bullying to get it to work. The third part is having to update the EFI version of grub to allow for version changes in kernel, we handle this with a custom alias.
+
 
 Step 1: We begin by collecting the tools and materials needed:
 - Flash drive with over 32GB (bigger is better) _**Note I am using a 16GB for tutorial**_
@@ -16,13 +17,16 @@ Step 1: We begin by collecting the tools and materials needed:
 - Etcher ([https://www.balena.io/etcher/](https://www.balena.io/etcher/))
 - Rufus ([https://rufus.ie/en/](https://rufus.ie/en/))
 
+
 Step 2: Extract the files from Super-UEFIinSecureBoot-Disk zip, this will give .img file that will be used in the next step.
+
 
 Step 3: Install etcher, and then run it to burn the img file to the flash device.
 - On the left choose Select from file, and select the "Super-UEFIinSecureBoot-Disk_minimal.img" in the folder you extracted to. 
 - Confirm the device in the middle is the device you want to burn the img file to.
 - Then click the blue "Flash" button on the right hand side.
 ![Etcher-Image-Burn](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/Etcher.png)
+
 
 Step 4: Use Rufus to burn kali bootable install on second drive.
 - Open Rufus, and on the right find the select box and use that to select the Kali installer iso.
@@ -32,7 +36,9 @@ Step 4: Use Rufus to burn kali bootable install on second drive.
 ![Rufus-Format-Options](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/Rufus.png)
 - Rufus will ask what mode you want to use, use DD image mode.
 
+
 Step 5: Insert both devices into the computer.
+
 
 Step 6: Temporarily disable secure boot on computer, this is necessary to boot the Kali installer flash drive.
 - Depending on motherboard you have to get into BIOS/UEFI, typically this can be F10, F2, F12, F1, or DEL keys.
@@ -41,9 +47,11 @@ Step 6: Temporarily disable secure boot on computer, this is necessary to boot t
 ![Secure-Boot-Option](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/Secure Boot.jpg)
 - Make sure to apply/save changes before closing BIOS/UEFI.
 
+
 Step 7: Access the boot menu for the motherboard, this can typically be F11 or F12, though varies per manufacture.
 ![Boot-Menu-Options](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/Boot%20Menu.jpg)
 *Note here: Can be a bit hard to distinquish which drive is the Kali installer, if needed you can plug in Kali and boot to it first and then plug in the device with the modified Grub boot.
+
 
 Step 8: Progress through the Kali installer until you reach the partition section, at this section we have to change a few settings quickly.
 - On partition disks we choose Manual.
@@ -59,6 +67,7 @@ Step 8: Progress through the Kali installer until you reach the partition sectio
 - On the final partition page, Write changes to disks, click yes and continue.
 ![Write-changes](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/Partition7.jpg)
 
+
 Step 9: Finish up installation of Kali.
 - Will receive an error for installing grub, click continue.
 ![Failed grub install](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/Grub Failed.jpg)
@@ -69,9 +78,12 @@ Step 9: Finish up installation of Kali.
 - Finally on "Continue without boot loader", click continue,
 ![Confirm without boot loader](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/Confirm without boot.jpg)
 
+
 Step 10: Remove the flash drive with Kali installer. Leave the first flash drive.
 
+
 Step 11: Re-enable secure boot, done by reversing step 6.
+
 
 Step 12: Add the device certificate _**This step will need to be done each time this flash drive is connected to a new computer with Secure Boot enabled**_
 - With the flash drive connected to the computer, access the boot menu (See step 7) and select the flash drive for boot. This will show a prompt that says "Access Violation" in a message box. 
@@ -108,4 +120,31 @@ Step 13: Temporary changes to Grub bootloader to access Kali install for final s
 	- initrd /boot/initrd.img-5.10.0-kali9-amd64
 - press 'ctrl' + 'x' and your system should start booting into kali where we can make the final changes.
 
+
 Step 14: Mounting grub partion and adding to fstab.
+- First login to Kali and open a root terminal.
+![Root Terminal](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/Root Terminal.jpg)
+- In root terminal, type 'sudo nano /etc/fstab'
+![Root Nano fstab](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/Root fstab.jpg)
+- In nano editor, at the end add the following number of spaces is for readability:
+	- UUID=_**8 Char UUID of Grub/EFI partition from above step**_     /boot/efi   vfat  utf8  0  2
+![Nano edit fstab](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/fstab edit_LI.jpg)
+- Save changes in nano with 'ctrl' + 'o' and hit enter, then 'ctrl' + 'x'.
+- In root terminal, type 'mount -a' to mount the new folder from fstab.
+![Root mount -a](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/root mount a.jpg)
+- In root terminal, type 'update-grub'
+![Root update-grub](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/root update grub config.jpg)
+- Open a regular terminal, and type 'sudo nano .zshrc'.
+![Edit .zshrc](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/edit zshrc.jpg)
+- In nano editor, scroll to the very bottom and add the following:
+	- alias grub-update='sudo cp /boot/grub/grub.cfg /boot/efi/EFI/grub/grub.cfg'
+![Nano adding alias](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/adding alias.jpg)
+- Save changes in nano with 'ctrl' + 'o' and hit enter, then 'ctrl' + 'x'.
+- In terminal type 'source .zshrc'.
+![source .zshrc](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/source zshrc.jpg)
+- In terminal type 'grub-update' to copy the grub config from Kali's boot directory to the EFI grub  directory.
+- In terminal type 'cat /boot/efi/EFI/grub/grub.cfg' to confirm new grub copied.
+![grub-update & cat grub.cfg](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/grub update.jpg)
+- Reboot and confirm that Kali shows up in grub bootloader (will need to follow step 7 to access boot menu and select the USB/SD card).
+
+**Whenever you install Kali updates make sure to run the grub-update custom alias, or the version it will load is the original version installed and not the updated kernel**
