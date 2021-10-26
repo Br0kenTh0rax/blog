@@ -75,8 +75,21 @@ Step 11: Re-enable secure boot, done by reversing step 6.
 
 Step 12: Add the device certificate _**This step will need to be done each time this flash drive is connected to a new computer with Secure Boot enabled**_
 - With the flash drive connected to the computer, access the boot menu (See step 7) and select the flash drive for boot. This will show a prompt that says "Access Violation" in a message box. 
-- Press OK and choose "Enroll cert from file" menu option. 
+![UEFI Verification Error](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/UEFI Error.jpg)
+- Press OK, then press any key on next page and choose "Enroll cert from disk" menu option. 
+![UEFI Press any key](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/UEFI Error 1.jpg)
+![UEFI Enroll key from disk](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/UEFI Error 2.jpg)
+- Select the drive that you installed grub on.
+![UEFI Select Key](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/UEFI Error 3.jpg)
 - Select ENROLL_THIS_KEY_IN_MOKMANAGER.cer and confirm certificate enrolling.
+![UEFI Enroll This Key](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/UEFI Error 4.jpg)
+- On Enroll MOK, click 'continue'.
+![Enroll MOK Continue](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/UEFI Error 5.jpg)
+- On Enroll Key(s), click 'yes'.
+![UEFI Enroll Keys](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/UEFI Error 6.jpg)
+- On final screen, choose 'reboot'.
+![UEFI MOK Reboot](https://raw.githubusercontent.com/Br0kenTh0rax/blog/master/_posts/UEFI Error 7.jpg)
+
 
 Step 13: Temporary changes to Grub bootloader to access Kali install for final steps.
 - Access the grub edit menu for either of the current options (Power Off or Reboot) by highlighting one and pressing 'e' on keyboard.
